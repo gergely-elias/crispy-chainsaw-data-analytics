@@ -1,5 +1,5 @@
 # Pre-commit, tests, and security (pip-audit, bandit) run in parallel. On pushes
-# to main, after all succeed, builds a PEP 440 dev release (<base>.dev<run_number>)
+# to master, after all succeed, builds a PEP 440 dev release (<base>.dev<run_number>)
 # and publishes with uv. MkDocs is built and deployed to GitHub Pages only after
 # publish succeeds.
 #
@@ -10,9 +10,9 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [master]
   pull_request:
-    branches: [main]
+    branches: [master]
   workflow_dispatch:
 
 concurrency:
@@ -69,7 +69,7 @@ jobs:
 
   publish:
     needs: [pre-commit, test, security]
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     permissions:
       contents: read
